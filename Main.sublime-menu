@@ -1,0 +1,74 @@
+[
+    {
+        "caption": "Tools",
+        "id": "tools",
+        "children": [
+            {
+                "caption": "CodeShot",
+                "children": [
+                    {
+                        "caption": "Test Plugin Loaded",
+                        "command": "code_shot_test"
+                    },
+                    {
+                        "caption": "Copy Image to Clipboard",
+                        "command": "code_shot",
+                        "args": {
+                            "mode": "copy"
+                        }
+                    },
+                    {
+                        "caption": "Save Image to Desktop",
+                        "command": "code_shot",
+                        "args": {
+                            "mode": "save"
+                        }
+                    },
+                    {
+                        "caption": "Open Preview Only",
+                        "command": "code_shot",
+                        "args": {
+                            "mode": "preview"
+                        }
+                    },
+                    {
+                        "caption": "-"
+                    },
+                    {
+                        "caption": "Themes",
+                        "children": [
+                            {
+                                "caption": "VS Code Dark",
+                                "command": "code_shot_set_theme",
+                                "args": {
+                                    "theme": "vscode-dark"
+                                }
+                            },
+                            {
+                                "caption": "Dracula",
+                                "command": "code_shot_set_theme",
+                                "args": {
+                                    "theme": "dracula"
+                                }
+                            },
+                            {
+                                "caption": "GitHub Light",
+                                "command": "code_shot_set_theme",
+                                "args": {
+                                    "theme": "github-light"
+                                }
+                            },
+                            {
+                                "caption": "Midnight",
+                                "command": "code_shot_set_theme",
+                                "args": {
+                                    "theme": "midnight"
+                                }
+                            }
+                        ]
+                    }
+                ]
+            }
+        ]
+    }
+]

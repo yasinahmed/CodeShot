@@ -1,0 +1,26 @@
+Thank you for installing CodeShot.
+
+Developer: Yasin Jagral
+
+Usage:
+1. Select code in Sublime Text.
+2. Open Tools > CodeShot.
+3. Choose Copy Image to Clipboard or Save Image to Desktop.
+
+Requirements:
+- Windows
+- Google Chrome or Microsoft Edge installed locally
+- PowerShell
+
+CodeShot works offline.
+
+Optional shortcut:
+Add your own key binding in Preferences > Key Bindings:
+
+{
+    "keys": ["ctrl+alt+s"],
+    "command": "code_shot",
+    "args": {
+        "mode": "copy"
+    }
+}

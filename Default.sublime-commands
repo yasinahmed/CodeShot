@@ -1,0 +1,55 @@
+[
+    {
+        "caption": "CodeShot: Test Plugin Loaded",
+        "command": "code_shot_test"
+    },
+    {
+        "caption": "CodeShot: Copy Image to Clipboard",
+        "command": "code_shot",
+        "args": {
+            "mode": "copy"
+        }
+    },
+    {
+        "caption": "CodeShot: Save Image to Desktop",
+        "command": "code_shot",
+        "args": {
+            "mode": "save"
+        }
+    },
+    {
+        "caption": "CodeShot: Open Preview Only",
+        "command": "code_shot",
+        "args": {
+            "mode": "preview"
+        }
+    },
+    {
+        "caption": "CodeShot: Set Theme - VS Code Dark",
+        "command": "code_shot_set_theme",
+        "args": {
+            "theme": "vscode-dark"
+        }
+    },
+    {
+        "caption": "CodeShot: Set Theme - Dracula",
+        "command": "code_shot_set_theme",
+        "args": {
+            "theme": "dracula"
+        }
+    },
+    {
+        "caption": "CodeShot: Set Theme - GitHub Light",
+        "command": "code_shot_set_theme",
+        "args": {
+            "theme": "github-light"
+        }
+    },
+    {
+        "caption": "CodeShot: Set Theme - Midnight",
+        "command": "code_shot_set_theme",
+        "args": {
+            "theme": "midnight"
+        }
+    }
+]
