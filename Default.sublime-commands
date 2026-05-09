@@ -1,9 +1,5 @@
 [
     {
-        "caption": "CodeShot: Test Plugin Loaded",
-        "command": "code_shot_test"
-    },
-    {
         "caption": "CodeShot: Copy Image to Clipboard",
         "command": "code_shot",
         "args": {

@@ -7,10 +7,6 @@
                 "caption": "CodeShot",
                 "children": [
                     {
-                        "caption": "Test Plugin Loaded",
-                        "command": "code_shot_test"
-                    },
-                    {
                         "caption": "Copy Image to Clipboard",
                         "command": "code_shot",
                         "args": {

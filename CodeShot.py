@@ -15,9 +15,35 @@ from datetime import datetime
 DEFAULT_THEME = "vscode-dark"
 
 
-class CodeShotTestCommand(sublime_plugin.WindowCommand):
-    def run(self):
-        sublime.message_dialog("CodeShot is loaded correctly.")
+def hidden_startupinfo():
+    """Return STARTUPINFO to hide child process windows on Windows."""
+    if os.name != "nt":
+        return None
+
+    startupinfo = subprocess.STARTUPINFO()
+    startupinfo.dwFlags |= subprocess.STARTF_USESHOWWINDOW
+    return startupinfo
+
+
+def delete_file_quietly(path):
+    """Best-effort file deletion."""
+    if not path:
+        return
+
+    try:
+        if os.path.exists(path):
+            os.remove(path)
+    except OSError:
+        pass
+
+
+def delete_file_later(path, delay=60000):
+    """Delete a temporary file after a short delay, useful for preview files."""
+    def cleanup():
+        delete_file_quietly(path)
+
+    sublime.set_timeout_async(cleanup, delay)
+
 
 
 class CodeShotSetThemeCommand(sublime_plugin.WindowCommand):
@@ -46,14 +72,16 @@ class CodeShotCommand(sublime_plugin.TextCommand):
         language = self.detect_language(self.view, config["language_override"])
 
         html_content = self.build_html(code, language, config)
-        html_path = self.write_temp_file("codeshot-v54.html", html_content)
+        html_path = self.write_temp_file("codeshot.html", html_content)
 
         if mode == "preview":
             webbrowser.open("file:///" + html_path.replace("\\", "/"))
+            delete_file_later(html_path)
             return
 
         browser_path = self.find_browser(config["chrome_path"])
         if not browser_path:
+            delete_file_quietly(html_path)
             sublime.message_dialog(
                 "Chrome or Edge was not found.\n\n"
                 "Set chrome_path in CodeShot.sublime-settings."
@@ -64,33 +92,39 @@ class CodeShotCommand(sublime_plugin.TextCommand):
         save_to_desktop = (mode == "save")
         png_path = self.get_output_png_path(save_to_desktop)
 
-        ok, message = self.render_png(
-            browser_path,
-            html_path,
-            png_path,
-            self.get_capture_width(code, config),
-            capture_height
-        )
+        try:
+            ok, message = self.render_png(
+                browser_path,
+                html_path,
+                png_path,
+                self.get_capture_width(code, config),
+                capture_height
+            )
 
-        if not ok:
-            sublime.message_dialog("PNG export failed.\n\n" + message)
-            return
-
-        if mode == "copy":
-            copied, clip_error = self.copy_png_to_clipboard(png_path)
-            if not copied:
-                sublime.message_dialog(
-                    "PNG was created but clipboard copy failed.\n\n"
-                    "Temporary PNG:\n{}\n\nError:\n{}".format(png_path, clip_error)
-                )
+            if not ok:
+                sublime.message_dialog("PNG export failed.\n\n" + message)
                 return
 
-            sublime.message_dialog("CodeShot Saved to Clipboard Successfully.")
-            return
+            if mode == "copy":
+                copied, clip_error = self.copy_png_to_clipboard(png_path)
+                if not copied:
+                    sublime.message_dialog(
+                        "PNG was created but clipboard copy failed.\n\n"
+                        "Temporary PNG:\n{}\n\nError:\n{}".format(png_path, clip_error)
+                    )
+                    return
 
-        if mode == "save":
-            sublime.message_dialog("CodeShot Saved to Desktop Successfully.")
-            return
+                sublime.message_dialog("CodeShot Saved to Clipboard Successfully.")
+                return
+
+            if mode == "save":
+                sublime.message_dialog("CodeShot Saved to Desktop Successfully.")
+                return
+
+        finally:
+            delete_file_quietly(html_path)
+            if mode == "copy":
+                delete_file_quietly(png_path)
 
     def load_config(self, settings):
         return {
@@ -876,24 +910,20 @@ td {{ vertical-align: top; }}
             file_url
         ]
 
-        startupinfo = None
-
         try:
-            if os.name == "nt":
-                startupinfo = subprocess.STARTUPINFO()
-                startupinfo.dwFlags |= subprocess.STARTF_USESHOWWINDOW
-
             process = subprocess.Popen(
                 command,
                 stdout=subprocess.PIPE,
                 stderr=subprocess.PIPE,
-                startupinfo=startupinfo
+                startupinfo=hidden_startupinfo()
             )
 
             try:
                 stdout, stderr = process.communicate(timeout=30)
-            except TypeError:
+            except subprocess.TimeoutExpired:
+                process.kill()
                 stdout, stderr = process.communicate()
+                return False, "Browser screenshot process timed out."
 
             if process.returncode != 0:
                 try:
@@ -943,13 +973,16 @@ finally {{
             process = subprocess.Popen(
                 command,
                 stdout=subprocess.PIPE,
-                stderr=subprocess.PIPE
+                stderr=subprocess.PIPE,
+                startupinfo=hidden_startupinfo()
             )
 
             try:
                 stdout, stderr = process.communicate(timeout=20)
-            except TypeError:
+            except subprocess.TimeoutExpired:
+                process.kill()
                 stdout, stderr = process.communicate()
+                return False, "PowerShell clipboard process timed out."
 
             if process.returncode != 0:
                 try:

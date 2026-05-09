@@ -24,3 +24,6 @@ Add your own key binding in Preferences > Key Bindings:
         "mode": "copy"
     }
 }
+
+
+Note: CodeShot does not install a default keyboard shortcut. Add one manually from Preferences > Key Bindings if desired.

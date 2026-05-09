@@ -10,7 +10,7 @@ CodeShot is a Sublime Text plugin for creating clean CodeSnap-style screenshots 
 - Save code screenshot to Desktop
 - Clean rounded card-style screenshot layout
 - Programming language shown in the screenshot header
-- Footer branding: `CodeShot by Yasin Jagral`
+- Default footer branding: `CodeShot by Yasin Jagral` (configurable via `footer_text`)
 - Theme switching from the Tools menu
 - Long-line wrapping for large lines of code
 - Auto-dedent selected code so it starts from the first column
@@ -71,14 +71,16 @@ For manual folder installation, the structure should be:
 ```txt
 Packages
   CodeShot
+    .python_version
     CodeShot.py
     CodeShot.sublime-settings
     Default.sublime-commands
-    Default.sublime-keymap
     Main.sublime-menu
     README.md
     LICENSE
 ```
+
+Note: CodeShot does not include a default keymap file because Package Control packages should avoid forcing keyboard shortcuts.
 
 5. Restart Sublime Text.
 
@@ -196,6 +198,7 @@ This repository is prepared for Package Control submission:
 - `messages.json` included
 - No `__pycache__` or `.pyc` files
 - No forced default keybinding
+- `.python_version` included to opt into the Python 3.8 plugin host
 - Windows-only support is declared honestly
 
 ## License
