@@ -204,3 +204,7 @@ This repository is prepared for Package Control submission:
 ## License
 
 MIT License. See `LICENSE`.
+
+## Package Settings
+
+Preferences > Package Settings > CodeShot > Settings
