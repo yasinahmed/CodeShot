@@ -1,5 +1,13 @@
 [
     {
+        "caption": "CodeShot: Settings",
+        "command": "edit_settings",
+        "args": {
+            "base_file": "${packages}/CodeShot/CodeShot.sublime-settings",
+            "user_file": "${packages}/User/CodeShot.sublime-settings"
+        }
+    },
+    {
         "caption": "CodeShot: Copy Image to Clipboard",
         "command": "code_shot",
         "args": {

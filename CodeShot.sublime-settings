@@ -1,33 +1,68 @@
 {
+    // Text shown in the card header before the detected language name.
     "title": "Code Snapshot",
+
+    // Theme used for the screenshot card. Available values:
+    // "vscode-dark", "dracula", "github-light", "midnight".
     "theme": "vscode-dark",
+
+    // Code font settings used inside the screenshot.
     "font_size": 15,
     "font_family": "Consolas, 'Courier New', monospace",
+
+    // Visual controls for the card header and code area.
     "show_window_buttons": true,
     "show_line_numbers": true,
     "padding": 32,
     "page_padding": 16,
     "border_radius": 22,
     "card_max_width": 1180,
+
+    // Shadow around the card. Reduce these values for a flatter screenshot.
     "shadow_blur": 10,
     "shadow_spread": 0,
     "shadow_alpha": 0.2,
+
+    // Fallback screenshot width used when auto width is disabled.
     "screenshot_width": 1400,
+
+    // Copy mode uses a temporary PNG and does not save to Desktop.
+    // Save mode always saves to Desktop.
     "save_to_desktop": false,
+
+    // Footer shown at the bottom of the screenshot. This is configurable.
     "show_footer": true,
     "footer_text": "CodeShot by Yasin Jagral",
+
+    // Automatically calculate screenshot height based on selected code.
     "auto_trim_height": true,
     "min_capture_height": 520,
     "max_capture_height": 10000,
     "fixed_capture_height": 900,
+
+    // Optional full path to Chrome or Edge. Leave empty for auto-detection.
+    // Example: "C:\\Program Files\\Google\\Chrome\\Application\\chrome.exe"
     "chrome_path": "",
+
+    // Force a language instead of detecting it from the current file syntax.
+    // Leave empty for automatic detection. Examples: "html", "css", "javascript".
     "language_override": "",
+
+    // Automatically calculate screenshot width based on selected code.
     "auto_trim_width": true,
     "min_capture_width": 900,
     "max_capture_width": 2200,
     "fixed_capture_width": 1200,
+
+    // Background around the screenshot card.
     "page_background": "#ffffff",
+
+    // Extra capture buffer to avoid clipping edges or shadows.
     "capture_balance_buffer": 80,
+
+    // Remove common leading indentation from selected code.
     "dedent_selection": true,
+
+    // Wrap long lines instead of creating an extremely wide screenshot.
     "wrap_long_lines": true
 }
